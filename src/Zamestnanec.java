@@ -48,7 +48,8 @@ public abstract class Zamestnanec {
         System.out.println("Rok narození: " + rokNarozeni);
     }
 
-    public abstract void spustDovednost();
+    public abstract void spustDovednost(EvidenceZamestnancu evidence);
+
 
     public int getID(){
         return id;
@@ -61,6 +62,11 @@ public abstract class Zamestnanec {
     public String getPrijmeni() {
         return prijmeni;
     }   
+
+    public int getRokNarozeni() {
+        return rokNarozeni;
+    }
+
 
     public ArrayList<Spoluprace> getSpoluprace() {
         return spoluprace;

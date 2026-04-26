@@ -1,5 +1,12 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 
 public class EvidenceZamestnancu {
 
@@ -43,7 +50,7 @@ public class EvidenceZamestnancu {
         Zamestnanec zamestnanec = najdiZamestnancePodleID(id);
 
         if (zamestnanec != null){
-            zamestnanec.spustDovednost();
+            zamestnanec.spustDovednost(this);
         }
         else{
             System.out.println("Zamestnanec s ID " + id + " nebyl nalezen.");
@@ -176,6 +183,116 @@ public class EvidenceZamestnancu {
         nejviceVazeb.vypisInfo();
         System.out.println("Pocet vazeb: " + nejviceVazeb.getSpoluprace().size());
     }
+
+    public void ulozZamestnanceDoSouboru(int id, String nazevSouboru) {
+        Zamestnanec zamestnanec = najdiZamestnancePodleID(id);
+
+        if (zamestnanec == null) {
+            System.out.println("Zamestnanec s ID " + id + " nebyl nalezen.");
+            return;
+        }
+
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(nazevSouboru, true));
+
+            if (zamestnanec instanceof DatovyAnalytik) {
+                writer.println("DATOVY_ANALYTIK");
+            } else if (zamestnanec instanceof BezpecnostniSpecialista) {
+                writer.println("BEZPECNOSTNI_SPECIALISTA");
+            }
+
+            writer.println(zamestnanec.getID());
+            writer.println(zamestnanec.getJmeno());
+            writer.println(zamestnanec.getPrijmeni());
+            writer.println(zamestnanec.getRokNarozeni());
+
+            writer.println("SPOLUPRACE");
+            for (Spoluprace spoluprace : zamestnanec.getSpoluprace()) {
+                writer.println(spoluprace.getIdKolegy() + ";" + spoluprace.getKvalita());
+            }
+            writer.println("KONEC_ZAMESTNANCE");
+
+            writer.close();
+
+            System.out.println("Zamestnanec byl ulozen do souboru.");
+
+        } catch (IOException e) {
+            System.out.println("Chyba pri ukladani do souboru.");
+        }
+    }
+
+    public void nactiZamestnanceZeSouboru(String nazevSouboru) {
+        try {
+            Scanner scanner = new Scanner(new File(nazevSouboru));
+            int pocetNactenych = 0;
+
+            while (scanner.hasNextLine()) {
+                String typ = scanner.nextLine();
+
+                if (typ.isEmpty()) {
+                    continue;
+                }
+
+                int id = Integer.parseInt(scanner.nextLine());
+                String jmeno = scanner.nextLine();
+                String prijmeni = scanner.nextLine();
+                int rokNarozeni = Integer.parseInt(scanner.nextLine());
+
+                Zamestnanec zamestnanec;
+
+                if (typ.equals("DATOVY_ANALYTIK")) {
+                    zamestnanec = new DatovyAnalytik(id, jmeno, prijmeni, rokNarozeni);
+                } else if (typ.equals("BEZPECNOSTNI_SPECIALISTA")) {
+                    zamestnanec = new BezpecnostniSpecialista(id, jmeno, prijmeni, rokNarozeni);
+                } else {
+                    System.out.println("Neznamy typ zamestnance v souboru.");
+                    scanner.close();
+                    return;
+                }
+
+                if (scanner.hasNextLine()) {
+                    String radek = scanner.nextLine();
+
+                    if (radek.equals("SPOLUPRACE")) {
+                        while (scanner.hasNextLine()) {
+                            String spolupraceRadek = scanner.nextLine();
+
+                            if (spolupraceRadek.equals("KONEC_ZAMESTNANCE")) {
+                                break;
+                            }
+
+                            String[] casti = spolupraceRadek.split(";");
+
+                            int idKolegy = Integer.parseInt(casti[0]);
+                            KvalitaSpoluprace kvalita = KvalitaSpoluprace.valueOf(casti[1]);
+
+                            zamestnanec.pridejSpolupraci(idKolegy, kvalita);
+                        }
+                    }
+                }
+
+                if (najdiZamestnancePodleID(id) != null) {
+                    System.out.println("Zamestnanec s ID " + id + " uz v evidenci existuje, nebude nacten znovu.");
+                    continue;
+                }
+
+                zamestnanci.add(zamestnanec);
+                pocetNactenych++;
+
+                if (id >= dalsiID) {
+                    dalsiID = id + 1;
+                }
+            }
+
+            scanner.close();
+
+            System.out.println("Pocet nactenych zamestnancu: " + pocetNactenych);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Soubor nebyl nalezen.");
+        }
+    }
+
 
 
 }

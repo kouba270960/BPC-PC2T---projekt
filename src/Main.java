@@ -19,6 +19,8 @@ public class Main {
             System.out.println("8 - Abecedni vypis ve skupinach");
             System.out.println("9 - Statistiky spoluprace");
             System.out.println("10 - Pocty zamestnancu ve skupinach");
+            System.out.println("11 - Ulozit zamestnance do souboru");
+            System.out.println("12 - Nacist zamestnance ze souboru");
             System.out.println("0 - Konec");
             System.out.print("Zadej volbu: ");
 
@@ -126,7 +128,21 @@ public class Main {
             } else if (volba == 10) {
                 evidence.vypisPoctyVeSkupinach();
 
-            } else if (volba == 0) {
+            } else if (volba == 11) {
+                System.out.print("Zadej ID zamestnance: ");
+                int id = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("Zadej nazev souboru: ");
+                String nazevSouboru = scanner.nextLine();
+
+                evidence.ulozZamestnanceDoSouboru(id, nazevSouboru);
+            } else if (volba == 12) {
+                System.out.print("Zadej nazev souboru: ");
+                String nazevSouboru = scanner.nextLine();
+
+                evidence.nactiZamestnanceZeSouboru(nazevSouboru);
+            }else if (volba == 0) {
                 System.out.println("Program se ukoncuje.");
 
             } else {
