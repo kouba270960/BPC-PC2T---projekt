@@ -21,4 +21,8 @@ public abstract class Zamestnanec {
 
     public abstract void spustDovednost();
 
+    public int getID(){
+        return id;
+    }
+
 }

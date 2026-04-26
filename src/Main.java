@@ -2,19 +2,20 @@ public class Main {
    
     public static void main(String[] args) {
 
-        DatovyAnalytik analytik = new DatovyAnalytik(1, "jakub", "kriva", 2004);
-        BezpecnostniSpecialista specialista = new BezpecnostniSpecialista(2, "karel", "kopriva", 2000);
+        EvidenceZamestnancu evidence = new EvidenceZamestnancu();
 
-        analytik.vypisInfo();
-        analytik.spustDovednost();
+        evidence.pridejDatovehoAnalytika("Jan", "Novak", 2000);
+        evidence.pridejBezpecnostnihoSpecialistu("Petr", "Svoboda", 1998);
 
-        System.out.println();
+        Zamestnanec nalezeny = evidence.najdiZamestnancePodleID(3);
 
-        specialista.vypisInfo();
-        specialista.spustDovednost();
+        if (nalezeny != null){
+            nalezeny.vypisInfo();
+        }
+        else{
+            System.out.println("zamestnanec nebyl nalezen ");
+        }
 
     }
-
-
 
 }
