@@ -58,6 +58,11 @@ public class EvidenceZamestnancu {
     }
     
     public void pridejSpolupraci(int idZamestnance, int idKolegy, KvalitaSpoluprace kvalita) {
+        if (idZamestnance == idKolegy) {
+            System.out.println("Zamestnanec nemuze spolupracovat sam se sebou.");
+            return;
+        }
+
         Zamestnanec zamestnanec = najdiZamestnancePodleID(idZamestnance);
         Zamestnanec kolega = najdiZamestnancePodleID(idKolegy);
 
@@ -68,6 +73,11 @@ public class EvidenceZamestnancu {
 
         if (kolega == null) {
             System.out.println("Kolega s ID " + idKolegy + " nebyl nalezen.");
+            return;
+        }
+
+        if (zamestnanec.maSpolupraciSKolegou(idKolegy)) {
+            System.out.println("Tato spoluprace uz existuje.");
             return;
         }
 

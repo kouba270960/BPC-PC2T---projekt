@@ -22,10 +22,9 @@ public class Main {
             System.out.println("11 - Ulozit zamestnance do souboru");
             System.out.println("12 - Nacist zamestnance ze souboru");
             System.out.println("0 - Konec");
-            System.out.print("Zadej volbu: ");
-
-            volba = scanner.nextInt();
-            scanner.nextLine();
+            System.out.println();
+            volba = nactiCeleCislo(scanner, "Zadej volbu:");
+            System.out.println();
 
             if (volba == 1) {
                 System.out.print("Jmeno: ");
@@ -34,9 +33,7 @@ public class Main {
                 System.out.print("Prijmeni: ");
                 String prijmeni = scanner.nextLine();
 
-                System.out.print("Rok narozeni: ");
-                int rokNarozeni = scanner.nextInt();
-                scanner.nextLine();
+                int rokNarozeni = nactiCeleCislo(scanner, "Rok narozeni: ");
 
                 evidence.pridejDatovehoAnalytika(jmeno, prijmeni, rokNarozeni);
 
@@ -47,9 +44,7 @@ public class Main {
                 System.out.print("Prijmeni: ");
                 String prijmeni = scanner.nextLine();
 
-                System.out.print("Rok narozeni: ");
-                int rokNarozeni = scanner.nextInt();
-                scanner.nextLine();
+                int rokNarozeni = nactiCeleCislo(scanner, "Rok narozeni: ");
 
                 evidence.pridejBezpecnostnihoSpecialistu(jmeno, prijmeni, rokNarozeni);
 
@@ -57,9 +52,7 @@ public class Main {
                 evidence.vypisVsechnyZamestnance();
 
             } else if (volba == 4) {
-                System.out.print("Zadej ID: ");
-                int id = scanner.nextInt();
-                scanner.nextLine();
+                int id = nactiCeleCislo(scanner, "Zadej ID: ");
 
                 Zamestnanec zamestnanec = evidence.najdiZamestnancePodleID(id);
 
@@ -71,29 +64,20 @@ public class Main {
                 }
 
             } else if (volba == 5) {
-                System.out.print("Zadej ID: ");
-                int id = scanner.nextInt();
-                scanner.nextLine();
+                int id = nactiCeleCislo(scanner, "Zadej ID: ");
 
                 evidence.spustDovednostZamestnance(id);
 
             } else if (volba == 6) {
-                System.out.print("ID zamestnance: ");
-                int idZamestnance = scanner.nextInt();
-                scanner.nextLine();
+                int idZamestnance = nactiCeleCislo(scanner, "ID zamestnance: ");
 
-                System.out.print("ID kolegy: ");
-                int idKolegy = scanner.nextInt();
-                scanner.nextLine();
+                int idKolegy = nactiCeleCislo(scanner, "ID kolegy: ");
 
                 System.out.println("Kvalita spoluprace:");
                 System.out.println("1 - Spatna");
                 System.out.println("2 - Prumerna");
                 System.out.println("3 - Dobra");
-                System.out.print("Zadej volbu: ");
-
-                int volbaKvality = scanner.nextInt();
-                scanner.nextLine();
+                int volbaKvality = nactiCeleCislo(scanner, "Zadej volbu: ");
 
                 KvalitaSpoluprace kvalita;
 
@@ -111,9 +95,7 @@ public class Main {
                 evidence.pridejSpolupraci(idZamestnance, idKolegy, kvalita);
 
             } else if (volba == 7) {
-                System.out.print("Zadej ID zamestnance k odebrani: ");
-                int id = scanner.nextInt();
-                scanner.nextLine();
+                int id = nactiCeleCislo(scanner, "Zadej ID zamestnance k odebrani: ");
 
                 evidence.odeberZamestnance(id);
 
@@ -129,9 +111,7 @@ public class Main {
                 evidence.vypisPoctyVeSkupinach();
 
             } else if (volba == 11) {
-                System.out.print("Zadej ID zamestnance: ");
-                int id = scanner.nextInt();
-                scanner.nextLine();
+                int id = nactiCeleCislo(scanner, "Zadej ID zamestnance: ");
 
                 System.out.print("Zadej nazev souboru: ");
                 String nazevSouboru = scanner.nextLine();
@@ -154,5 +134,18 @@ public class Main {
         } while (volba != 0);
 
         scanner.close();
+    }
+
+    private static int nactiCeleCislo(Scanner scanner, String vyzva) {
+        while (true) {
+            System.out.print(vyzva);
+            String vstup = scanner.nextLine();
+
+            try {
+                return Integer.parseInt(vstup);
+            } catch (NumberFormatException e) {
+                System.out.println("Zadej prosim cele cislo.");
+            }
+        }
     }
 }

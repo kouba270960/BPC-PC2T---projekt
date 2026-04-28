@@ -81,4 +81,14 @@ public abstract class Zamestnanec {
         }
     }
 
+    public boolean maSpolupraciSKolegou(int idKolegy) {
+        for (Spoluprace jednaSpoluprace : spoluprace) {
+            if (jednaSpoluprace.getIdKolegy() == idKolegy) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
