@@ -8,20 +8,24 @@ public class Main {
         int volba;
 
         do {
-            System.out.println("===== Evidence zamestnancu =====");
-            System.out.println("1 - Pridat datoveho analytika");
-            System.out.println("2 - Pridat bezpecnostniho specialistu");
-            System.out.println("3 - Vypsat vsechny zamestnance");
-            System.out.println("4 - Najit zamestnance podle ID");
-            System.out.println("5 - Spustit dovednost zamestnance");
-            System.out.println("6 - Pridat spolupraci");
-            System.out.println("7 - Odebrat zamestnance");
-            System.out.println("8 - Abecedni vypis ve skupinach");
-            System.out.println("9 - Statistiky spoluprace");
-            System.out.println("10 - Pocty zamestnancu ve skupinach");
-            System.out.println("11 - Ulozit zamestnance do souboru");
-            System.out.println("12 - Nacist zamestnance ze souboru");
-            System.out.println("0 - Konec");
+            System.out.println();
+            System.out.println("┌────────────────────────────────────────────┐");
+            System.out.println("│            EVIDENCE ZAMESTNANCU            │");
+            System.out.println("├─────┬──────────────────────────────────────┤");
+            System.out.println("│  1  │  Pridat datoveho analytika           │");
+            System.out.println("│  2  │  Pridat bezpecnostniho specialistu   │");
+            System.out.println("│  3  │  Vypsat vsechny zamestnance          │");
+            System.out.println("│  4  │  Najit zamestnance podle ID          │");
+            System.out.println("│  5  │  Spustit dovednost zamestnance       │");
+            System.out.println("│  6  │  Pridat spolupraci                   │");
+            System.out.println("│  7  │  Odebrat zamestnance                 │");
+            System.out.println("│  8  │  Abecedny vypis ve skupinach         │");
+            System.out.println("│  9  │  Statistiky spoluprace               │");
+            System.out.println("│ 10  │  Pocty zamestnancu ve skupinach      │");
+            System.out.println("│ 11  │  Ulozit zamestnance do souboru       │");
+            System.out.println("│ 12  │  Nacist zamestnance ze souboru       │");
+            System.out.println("│  0  │  Konec                               │");
+            System.out.println("└─────┴──────────────────────────────────────┘");
             System.out.println();
             volba = nactiCeleCislo(scanner, "Zadej volbu:");
             System.out.println();
@@ -74,9 +78,11 @@ public class Main {
                 int idKolegy = nactiCeleCislo(scanner, "ID kolegy: ");
 
                 System.out.println("Kvalita spoluprace:");
-                System.out.println("1 - Spatna");
-                System.out.println("2 - Prumerna");
-                System.out.println("3 - Dobra");
+                System.out.println("┌─────┬───────────────────┐");
+                System.out.println("│  1  │ Spatna            │");
+                System.out.println("│  2  │ Priemerna         │");
+                System.out.println("│  3  │ Dobra             │");
+                System.out.println("└─────┴───────────────────┘");
                 int volbaKvality = nactiCeleCislo(scanner, "Zadej volbu: ");
 
                 KvalitaSpoluprace kvalita;
