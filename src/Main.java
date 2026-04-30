@@ -118,7 +118,7 @@ public class Main {
                 System.out.println("Kvalita spoluprace:");
                 System.out.println("┌─────┬───────────────────┐");
                 System.out.println("│  1  │ Spatna            │");
-                System.out.println("│  2  │ Priemerna         │");
+                System.out.println("│  2  │ Prumerna          │");
                 System.out.println("│  3  │ Dobra             │");
                 System.out.println("└─────┴───────────────────┘");
                 int volbaKvality = nactiCeleCislo(scanner, "Zadej volbu: ");
@@ -172,7 +172,7 @@ public class Main {
                     db.ulozZamestnancov(evidence);
                     db.odpoj();
                 }
-                System.out.println("Program se ukoncuje.");
+                System.out.println("Program se ukoncuje...");
 
             } else {
                 System.out.println("Neplatna volba.");
