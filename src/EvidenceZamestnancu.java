@@ -17,6 +17,18 @@ public class EvidenceZamestnancu {
         zamestnanci = new ArrayList<>();
         dalsiID = 1;
     }
+    
+    public ArrayList<Zamestnanec> getZamestnanci() {
+        return zamestnanci;
+    }
+    
+    public int getDalsiID() {
+        return dalsiID;
+    }
+    
+    public void setDalsiID(int id) {
+        this.dalsiID = id;
+    }
 
     public void pridejDatovehoAnalytika(String jmeno,String prijmeni, int rokNarozeni){
         DatovyAnalytik analytik = new DatovyAnalytik(dalsiID, jmeno, prijmeni, rokNarozeni);

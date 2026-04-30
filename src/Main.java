@@ -1,9 +1,47 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
         EvidenceZamestnancu evidence = new EvidenceZamestnancu();
         Scanner scanner = new Scanner(System.in);
+        
+        // SQL záloha
+        DatabazaManager db = new DatabazaManager();
+        
+        // Načítanie z SQL pri štarte
+        if (db.pripoj()) {
+            ArrayList<Map<String, Object>> zamData = db.stiahniZamestnancov();
+            ArrayList<Map<String, Object>> spolData = db.stiahniSpoluprace();
+            
+            if (!zamData.isEmpty()) {
+                int maxId = 0;
+                for (Map<String, Object> z : zamData) {
+                    int id = (int) z.get("id");
+                    String jmeno = (String) z.get("jmeno");
+                    String prijmeni = (String) z.get("prijmeni");
+                    int rok = (int) z.get("rokNarozeni");
+                    String typ = (String) z.get("typ");
+                    
+                    if ("analytik".equals(typ)) {
+                        evidence.pridejDatovehoAnalytika(jmeno, prijmeni, rok);
+                    } else {
+                        evidence.pridejBezpecnostnihoSpecialistu(jmeno, prijmeni, rok);
+                    }
+                    maxId = Math.max(maxId, id);
+                }
+                evidence.setDalsiID(maxId + 1);
+                
+                for (Map<String, Object> s : spolData) {
+                    int idZam = (int) s.get("idZamestnance");
+                    int idKol = (int) s.get("idKolegy");
+                    KvalitaSpoluprace kvalita = KvalitaSpoluprace.valueOf((String) s.get("kvalita"));
+                    evidence.pridejSpolupraci(idZam, idKol, kvalita);
+                }
+                System.out.println("[DB] Obnovené z SQL.");
+            }
+        }
 
         int volba;
 
@@ -129,6 +167,11 @@ public class Main {
 
                 evidence.nactiZamestnanceZeSouboru(nazevSouboru);
             }else if (volba == 0) {
+                // Ulož do SQL zálohy
+                if (db.jePripojeny()) {
+                    db.ulozZamestnancov(evidence);
+                    db.odpoj();
+                }
                 System.out.println("Program se ukoncuje.");
 
             } else {
