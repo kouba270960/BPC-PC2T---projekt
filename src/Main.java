@@ -7,10 +7,10 @@ public class Main {
         EvidenceZamestnancu evidence = new EvidenceZamestnancu();
         Scanner scanner = new Scanner(System.in);
         
-        // SQL záloha
+        
         DatabazaManager db = new DatabazaManager();
         
-        // Načítanie z SQL pri štarte
+        
         if (db.pripoj()) {
             ArrayList<Map<String, Object>> zamData = db.stiahniZamestnancov();
             ArrayList<Map<String, Object>> spolData = db.stiahniSpoluprace();
@@ -167,7 +167,7 @@ public class Main {
 
                 evidence.nactiZamestnanceZeSouboru(nazevSouboru);
             }else if (volba == 0) {
-                // Ulož do SQL zálohy
+                
                 if (db.jePripojeny()) {
                     db.ulozZamestnancov(evidence);
                     db.odpoj();

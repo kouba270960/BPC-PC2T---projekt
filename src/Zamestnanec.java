@@ -43,9 +43,9 @@ public abstract class Zamestnanec {
 
     public void vypisInfo() {
         System.out.println("ID: " + id);
-        System.out.println("Jméno: " + jmeno);
-        System.out.println("Příjmení: " + prijmeni);
-        System.out.println("Rok narození: " + rokNarozeni);
+        System.out.println("Jmeno: " + jmeno);
+        System.out.println("Prijmeni: " + prijmeni);
+        System.out.println("Rok narozeni: " + rokNarozeni);
     }
 
     public abstract void spustDovednost(EvidenceZamestnancu evidence);

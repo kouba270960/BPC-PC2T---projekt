@@ -3,10 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Správca SQL databázy pre zálohovanie.
- * Program funguje aj bez databázy.
- */
+
 public class DatabazaManager {
     
     private static final String DB_URL = "jdbc:mysql://localhost:3306/zaloha_sql";
@@ -38,7 +35,7 @@ public class DatabazaManager {
             System.out.println("JDBC ovladac nebyl nalezen.");
             return false;
         } catch (SQLException e) {
-            System.out.println("[DB] Nepodarilo sa pripojiť: " + e.getMessage());
+            System.out.println("Nepodarilo sa pripojiť: " + e.getMessage());
             return false;
         }
     }
@@ -50,7 +47,7 @@ public class DatabazaManager {
                 jmeno VARCHAR(100) NOT NULL,
                 prijmeni VARCHAR(100) NOT NULL,
                 rok_narozeni INT NOT NULL,
-                typ VARCHAR(20) NOT NULL
+                typ VARCHAR(50) NOT NULL
             )
             """;
             
@@ -64,6 +61,8 @@ public class DatabazaManager {
             """;
         
         try (Statement stmt = connection.createStatement()) {
+            stmt.execute("DROP TABLE IF EXISTS zamestnanci");
+            stmt.execute("DROP TABLE IF EXISTS spoluprace");
             stmt.execute(sqlZamestnanci);
             stmt.execute(sqlSpoluprace);
             System.out.println("Tabulky byly vytvoreny.");
@@ -102,7 +101,7 @@ public class DatabazaManager {
                 z.put("typ", rs.getString("typ"));
                 zoznam.add(z);
             }
-            System.out.println("Stazenych: " + zoznam.size() + "zamestnancu.");
+            System.out.println("Pocet stazenych zamestnancu: " + zoznam.size() + ".");
             
         } catch (SQLException e) {
             System.out.println(" Chyba: " + e.getMessage());
@@ -126,7 +125,7 @@ public class DatabazaManager {
                 s.put("kvalita", rs.getString("kvalita"));
                 zoznam.add(s);
             }
-            System.out.println("Stazenych: " + zoznam.size() + " spolupraci.");
+            System.out.println("Pocet stazenych spolupraci: " + zoznam.size() + ".");
             
         } catch (SQLException e) {
             System.out.println("Chyba: " + e.getMessage());
@@ -137,7 +136,6 @@ public class DatabazaManager {
     public void ulozZamestnancov(EvidenceZamestnancu evidence) {
         if (!jePripojeny) return;
         
-        // Vymaz
         try (Statement stmt = connection.createStatement()) {
             stmt.execute("SET FOREIGN_KEY_CHECKS = 0");
             stmt.execute("DELETE FROM spoluprace");
@@ -165,7 +163,7 @@ public class DatabazaManager {
             return;
         }
         
-        // Ulož spolupráce
+        
         String sql2 = "INSERT INTO spoluprace (id_zamestnance, id_kolegy, kvalita) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql2)) {
             for (Zamestnanec z : evidence.getZamestnanci()) {
