@@ -39,7 +39,7 @@ public class Main {
                     KvalitaSpoluprace kvalita = KvalitaSpoluprace.valueOf((String) s.get("kvalita"));
                     evidence.pridejSpolupraci(idZam, idKol, kvalita);
                 }
-                System.out.println("[DB] Obnovené z SQL.");
+                System.out.println("Informace obnoveny z SQL databazi.");
             }
         }
 
