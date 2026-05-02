@@ -31,11 +31,13 @@ public class DatabazaManager {
             
             System.out.println("Program pripojen k SQL databazi.");
             return true;
-        } catch (ClassNotFoundException e) {
+        } 
+        catch (ClassNotFoundException e) {
             System.out.println("JDBC ovladac nebyl nalezen.");
             return false;
-        } catch (SQLException e) {
-            System.out.println("Nepodarilo sa pripojiť: " + e.getMessage());
+        } 
+        catch (SQLException e) {
+            System.out.println("Nepodarilo se pripojit: " + e.getMessage());
             return false;
         }
     }
@@ -61,12 +63,11 @@ public class DatabazaManager {
             """;
         
         try (Statement stmt = connection.createStatement()) {
-            stmt.execute("DROP TABLE IF EXISTS zamestnanci");
-            stmt.execute("DROP TABLE IF EXISTS spoluprace");
             stmt.execute(sqlZamestnanci);
             stmt.execute(sqlSpoluprace);
             System.out.println("Tabulky byly vytvoreny.");
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println("Chyba pri vytvareni tabulek: " + e.getMessage());
         }
     }
@@ -78,7 +79,8 @@ public class DatabazaManager {
                 jePripojeny = false;
                 System.out.println("SQL databaze odpojena.");
             }
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println("Chyba: " + e.getMessage());
         }
     }
@@ -103,7 +105,8 @@ public class DatabazaManager {
             }
             System.out.println("Pocet stazenych zamestnancu: " + zoznam.size() + ".");
             
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(" Chyba: " + e.getMessage());
         }
         return zoznam;
@@ -127,7 +130,8 @@ public class DatabazaManager {
             }
             System.out.println("Pocet stazenych spolupraci: " + zoznam.size() + ".");
             
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println("Chyba: " + e.getMessage());
         }
         return zoznam;
@@ -141,7 +145,8 @@ public class DatabazaManager {
             stmt.execute("DELETE FROM spoluprace");
             stmt.execute("DELETE FROM zamestnanci");
             stmt.execute("SET FOREIGN_KEY_CHECKS = 1");
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println("Chyba pri mazani: " + e.getMessage());
             return;
         }
@@ -158,7 +163,8 @@ public class DatabazaManager {
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println("Chyba: " + e.getMessage());
             return;
         }
@@ -176,7 +182,8 @@ public class DatabazaManager {
             }
             pstmt.executeBatch();
             System.out.println("Data byla uspesne ulozena do SQL databazi.");
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println("Chyba: " + e.getMessage());
         }
     }
